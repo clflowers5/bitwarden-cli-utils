@@ -1,7 +1,3 @@
-// should get removed
+import BitwardenUser from './BitwardenUser';
 
-function first(message: string) {
-  console.log(`heyo ${message}`);
-}
-
-export default first;
+export { BitwardenUser };
