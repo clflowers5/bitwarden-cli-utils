@@ -3,7 +3,7 @@ import asyncExec from '../src/cli/asyncExec';
 
 jest.mock('../src/cli/asyncExec');
 
-// todo: fix tests now that sessionKey is conditionally added.
+// todo: can I consolidate some of these error case tests?
 describe('BitwardenUser', () => {
   let sut: BitwardenUser;
 
@@ -60,21 +60,47 @@ describe('BitwardenUser', () => {
   });
 
   describe('logout', () => {
+    afterEach(() => {
+      expect(asyncExec.mock.calls.length).toBe(1);
+      expect(asyncExec).toHaveBeenCalledWith('bw logout');
+    })
+
     it('throws if stderr is returned', async () => {
       const errorMessage = 'oh no!';
       asyncExec.mockImplementationOnce(() => ({ stderr: errorMessage }));
       await expect(sut.logout()).rejects.toThrow(new Error(errorMessage));
-      expect(asyncExec).toHaveBeenCalledWith('bw logout');
     });
 
     it('resolves void on success', async () => {
       asyncExec.mockImplementationOnce(() => ({}));
       await expect(sut.logout()).resolves.toEqual(undefined);
-      expect(asyncExec).toHaveBeenCalledWith('bw logout');
     });
   });
 
   describe('getItem', () => {
-    // todo:
+    afterEach(() => {
+      expect(asyncExec.mock.calls.length).toBe(1);
+      expect(asyncExec).toHaveBeenCalledWith('bw get item abc');
+    });
+
+    it('throws if stderr is returned', async () => {
+      const errorMessage = 'oh no!';
+      asyncExec.mockImplementationOnce(() => ({ stderr: errorMessage }));
+      await expect(sut.getItem('abc')).rejects.toThrow(new Error(errorMessage));
+    });
+
+    it('throws if returned item cannot be parsed to JSON object', async () => {
+      const returnedItem = '{a: 123, "b": "hello", c: [notValidJson]}';
+      asyncExec.mockImplementationOnce(() => ({ stdout: returnedItem }));
+      await expect(sut.getItem('abc')).rejects.toThrow();
+    });
+
+    it('returns valid retrieved object', async () => {
+      const returnedItem = '{"a": "abc", "b": 35, "c": [1, 2, 3]}';
+      asyncExec.mockImplementationOnce(() => ({ stdout: returnedItem }));
+      await expect(sut.getItem('abc')).resolves.toEqual(
+        JSON.parse(returnedItem)
+      );
+    });
   });
 });

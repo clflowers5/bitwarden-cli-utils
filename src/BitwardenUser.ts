@@ -20,7 +20,6 @@ class BitwardenUser {
     await this.executeBitwardenCommand('logout');
   }
 
-  // todo: test
   public async getItem(subject: string): Promise<object> {
     const response = await this.executeBitwardenCommand(`get item ${subject}`);
     return parseJsonFromString(response);
