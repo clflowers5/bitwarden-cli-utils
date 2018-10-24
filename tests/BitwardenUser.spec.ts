@@ -3,7 +3,6 @@ import asyncExec from '../src/cli/asyncExec';
 
 jest.mock('../src/cli/asyncExec');
 
-// todo: can I consolidate some of these error case tests?
 describe('BitwardenUser', () => {
   let sut: BitwardenUser;
 
@@ -63,7 +62,7 @@ describe('BitwardenUser', () => {
     afterEach(() => {
       expect(asyncExec.mock.calls.length).toBe(1);
       expect(asyncExec).toHaveBeenCalledWith('bw logout');
-    })
+    });
 
     it('throws if stderr is returned', async () => {
       const errorMessage = 'oh no!';
@@ -101,6 +100,38 @@ describe('BitwardenUser', () => {
       await expect(sut.getItem('abc')).resolves.toEqual(
         JSON.parse(returnedItem)
       );
+    });
+  });
+
+  describe('getCredentials', () => {
+    afterEach(() => {
+      expect(asyncExec.mock.calls.length).toBe(1);
+      expect(asyncExec).toHaveBeenCalledWith('bw get item abc');
+    });
+
+    it('throws if stderr is returned', async () => {
+      const errorMessage = 'oh no!';
+      asyncExec.mockImplementationOnce(() => ({ stderr: errorMessage }));
+      await expect(sut.getCredentials('abc')).rejects.toThrow(
+        new Error(errorMessage)
+      );
+    });
+
+    it('throws if returned item cannot be parsed to JSON object', async () => {
+      const returnedItem = '{a: 123, "b": "hello", c: [notValidJson]}';
+      asyncExec.mockImplementationOnce(() => ({ stdout: returnedItem }));
+      await expect(sut.getCredentials('abc')).rejects.toThrow();
+    });
+
+    it('returns valid retrieved credentials', async () => {
+      const username = 'myLogin';
+      const password = 'myPassword';
+      const returnedItem = `{"login": { "username": "${username}", "password": "${password}" } }`;
+      asyncExec.mockImplementationOnce(() => ({ stdout: returnedItem }));
+      await expect(sut.getCredentials('abc')).resolves.toEqual({
+        username: username,
+        password: password
+      });
     });
   });
 });

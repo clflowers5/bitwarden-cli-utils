@@ -1,6 +1,7 @@
 import asycExec from './cli/asyncExec';
 import throwIfPresent from './errorHelpers/throwIfPresent';
 import parseJsonFromString from './jsonHelpers/parseJsonFromString';
+import { BitwardenItem, Credentials } from './types';
 
 class BitwardenUser {
   private static SESSION_REGEX = /BW_SESSION="(.*?)"/;
@@ -20,9 +21,17 @@ class BitwardenUser {
     await this.executeBitwardenCommand('logout');
   }
 
-  public async getItem(subject: string): Promise<object> {
+  public async getItem(subject: string): Promise<BitwardenItem> {
     const response = await this.executeBitwardenCommand(`get item ${subject}`);
-    return parseJsonFromString(response);
+    return parseJsonFromString(response) as BitwardenItem;
+  }
+
+  public async getCredentials(subject: string): Promise<Credentials> {
+    const item = await this.getItem(subject);
+    return {
+      username: item.login.username,
+      password: item.login.password
+    };
   }
 
   private async executeBitwardenCommand(command: string): Promise<string> {

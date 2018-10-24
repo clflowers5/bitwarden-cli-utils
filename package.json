@@ -2,8 +2,8 @@
   "name": "bitwarden-cli-utils",
   "version": "0.0.1",
   "description": "",
-  "main": "lib/src/index.js",
-  "typings": "lib/index.d.ts",
+  "main": "dist/src/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
     "test": "jest",
@@ -11,7 +11,7 @@
     "test:watch": "jest --watch"
   },
   "files": [
-    "lib"
+    "dist"
   ],
   "author": "Chris Flowers",
   "license": "ISC",
@@ -36,7 +36,7 @@
     "testRegex": "^.+\\.spec\\.(ts|js)$",
     "testPathIgnorePatterns": [
       "/node_modules/",
-      "/lib/"
+      "/dist/"
     ]
   }
 }
