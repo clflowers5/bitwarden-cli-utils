@@ -13,8 +13,7 @@
   "types": "dist/src/index.d.ts",
   "scripts": {
     "build": "tsc --declaration",
-    "test": "jest",
-    "test:coverage": "jest --coverage",
+    "test": "jest --coverage",
     "test:watch": "jest --watch"
   },
   "files": [
