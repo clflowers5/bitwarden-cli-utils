@@ -1,6 +1,6 @@
 {
   "name": "bitwarden-cli-utils",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "A TypeScript / JavaScript wrapper for the bitwarden-cli. Simplifying programmatic credential management.",
   "keywords": [
     "bitwarden",
@@ -9,6 +9,10 @@
     "password manager",
     "credentials"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/clflowers5/bitwarden-cli-utils.git"
+  },
   "main": "dist/src/index.js",
   "types": "dist/src/index.d.ts",
   "scripts": {
