@@ -2,6 +2,7 @@ import asycExec from './cli/asyncExec';
 import throwIfPresent from './errorHelpers/throwIfPresent';
 import parseJsonFromString from './jsonHelpers/parseJsonFromString';
 import { BitwardenItem, Credentials } from './types';
+import { NPX_NO_INSTALL } from './cli/npxCommands';
 
 class BitwardenUser {
   private static SESSION_REGEX = /BW_SESSION="(.*?)"/;
@@ -36,7 +37,7 @@ class BitwardenUser {
 
   private async executeBitwardenCommand(command: string): Promise<string> {
     const { stdout, stderr } = await asycExec(
-      `bw ${command} ${this.buildSessionArgument()}`.trim()
+      `${NPX_NO_INSTALL} bw ${command} ${this.buildSessionArgument()}`.trim()
     );
     throwIfPresent(stderr);
     return stdout;

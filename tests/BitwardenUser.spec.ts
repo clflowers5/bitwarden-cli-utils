@@ -24,7 +24,7 @@ describe('BitwardenUser', () => {
       const errorMessage = 'oh no!';
       asyncExec.mockImplementationOnce(() => ({ stderr: errorMessage }));
       await expect(sut.login()).rejects.toThrow(new Error(errorMessage));
-      expect(asyncExec).toHaveBeenCalledWith('bw login username password');
+      expect(asyncExec).toHaveBeenCalledWith('npx --no-install bw login username password');
     });
 
     it('throws if session key cannot be parsed', async () => {
@@ -32,7 +32,7 @@ describe('BitwardenUser', () => {
         stdout: 'SESSION="abc123"'
       }));
       await expect(sut.login()).rejects.toThrow();
-      expect(asyncExec).toHaveBeenCalledWith('bw login username password');
+      expect(asyncExec).toHaveBeenCalledWith('npx --no-install bw login username password');
     });
 
     it('resolves void on success', async () => {
@@ -40,7 +40,7 @@ describe('BitwardenUser', () => {
         stdout: 'BW_SESSION="abc123"'
       }));
       await expect(sut.login()).resolves.toEqual(undefined);
-      expect(asyncExec).toHaveBeenCalledWith('bw login username password');
+      expect(asyncExec).toHaveBeenCalledWith('npx --no-install bw login username password');
     });
 
     it('subsequent commands include "sessionKey" argument', async () => {
@@ -61,7 +61,7 @@ describe('BitwardenUser', () => {
   describe('logout', () => {
     afterEach(() => {
       expect(asyncExec.mock.calls.length).toBe(1);
-      expect(asyncExec).toHaveBeenCalledWith('bw logout');
+      expect(asyncExec).toHaveBeenCalledWith('npx --no-install bw logout');
     });
 
     it('throws if stderr is returned', async () => {
@@ -79,7 +79,7 @@ describe('BitwardenUser', () => {
   describe('getItem', () => {
     afterEach(() => {
       expect(asyncExec.mock.calls.length).toBe(1);
-      expect(asyncExec).toHaveBeenCalledWith('bw get item abc');
+      expect(asyncExec).toHaveBeenCalledWith('npx --no-install bw get item abc');
     });
 
     it('throws if stderr is returned', async () => {
@@ -106,7 +106,7 @@ describe('BitwardenUser', () => {
   describe('getCredentials', () => {
     afterEach(() => {
       expect(asyncExec.mock.calls.length).toBe(1);
-      expect(asyncExec).toHaveBeenCalledWith('bw get item abc');
+      expect(asyncExec).toHaveBeenCalledWith('npx --no-install bw get item abc');
     });
 
     it('throws if stderr is returned', async () => {
