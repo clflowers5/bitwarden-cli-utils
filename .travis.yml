@@ -3,5 +3,6 @@ node_js:
   - "lts/*"
 scripts:
   - npm install codecov -g
+  - npm run test:coverage
 after_success:
-  - codecov
+  - codecov -f coverage/*.json
