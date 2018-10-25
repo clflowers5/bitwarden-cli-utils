@@ -1,5 +1,7 @@
 # Bitwarden CLI Utils
 
+[![codecov](https://codecov.io/gh/clflowers5/bitwarden-cli-utils/branch/master/graph/badge.svg)](https://codecov.io/gh/clflowers5/bitwarden-cli-utils)
+
 ## Overview
 Simple wrapper for the Bitwarden CLI to allow for easy retrieval and (eventually) management of credentials.
 
