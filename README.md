@@ -1,5 +1,6 @@
 # Bitwarden CLI Utils
 
+[![Build Status](https://travis-ci.com/clflowers5/bitwarden-cli-utils.svg?branch=master)](https://travis-ci.com/clflowers5/bitwarden-cli-utils)
 [![codecov](https://codecov.io/gh/clflowers5/bitwarden-cli-utils/branch/master/graph/badge.svg)](https://codecov.io/gh/clflowers5/bitwarden-cli-utils)
 
 ## Overview
