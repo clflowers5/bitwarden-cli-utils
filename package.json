@@ -1,6 +1,6 @@
 {
   "name": "bitwarden-cli-utils",
-  "version": "0.0.7",
+  "version": "1.0.0",
   "description": "A TypeScript / JavaScript wrapper for the bitwarden-cli. Simplifying programmatic credential management.",
   "keywords": [
     "bitwarden",
